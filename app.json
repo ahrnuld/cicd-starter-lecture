@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "CI/CD Starter",
-    "slug": "cicd-starter",
+    "name": "Cicd Starter Lecture",
+    "slug": "cicd-starter-lecture",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "dev.lecture.cicdstarter"
+      "bundleIdentifier": "io.github.ahrnuld.cicd-starter-lecture"
     },
     "android": {
       "adaptiveIcon": {
@@ -18,7 +18,7 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "dev.lecture.cicdstarter"
+      "package": "io.github.ahrnuld.cicd_starter_lecture"
     },
     "web": {
       "favicon": "./assets/favicon.png"

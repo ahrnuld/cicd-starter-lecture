@@ -1,0 +1,71 @@
+# .github/workflows/ci.yml
+# Continuous integration: check every pull request automatically.
+
+# 1. NAME: shown in the "Actions" tab on GitHub
+name: CI
+
+# 2. TRIGGER: when does this workflow run?
+on:
+  pull_request:            # every pull request (and every new push to it)
+  push:
+    branches: [main]       # and every push to main
+  workflow_dispatch:       # and a "Run workflow" button in the Actions tab
+
+# 3. JOBS: each job runs on its own fresh virtual machine
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest # a free Linux machine hosted by GitHub
+
+    # 4. STEPS: run one after another; if one fails, the job stops
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v7        # "uses" = a ready-made action
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm                     # reuse downloaded packages between runs
+
+      - name: Install dependencies
+        run: npm ci                      # "run" = a shell command
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Unit and component tests
+        run: npm test -- --ci
+
+  # New job: end-to-end tests in real browsers, against the web build.
+#   e2e-web:
+#     needs: lint-and-test   # only start when lint + unit tests are green
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v7
+
+#       - uses: actions/setup-node@v7
+#         with:
+#           node-version: 24
+#           cache: npm
+
+#       - run: npm ci
+
+#       - name: Build the web version of the app
+#         run: npm run build:web           # expo export --platform web -> ./dist
+
+#       - name: Install Playwright browsers
+#         run: npx playwright install --with-deps chromium webkit
+
+#       - name: Run Playwright tests
+#         run: npm run test:e2e
+
+#       - name: Upload the test report
+#         if: ${{ !cancelled() }}          # also (especially!) when tests fail
+#         uses: actions/upload-artifact@v7
+#         with:
+#           name: playwright-report
+#           path: playwright-report/
+#           retention-days: 14
