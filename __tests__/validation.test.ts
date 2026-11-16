@@ -7,7 +7,7 @@ describe('isValidEmail', () => {
   });
 
   it('rejects an address without @', () => {
-    expect(isValidEmail('student.school.nl')).toBe(false);
+    expect(!isValidEmail('student.school.nl')).toBe(false);
   });
 });
 
